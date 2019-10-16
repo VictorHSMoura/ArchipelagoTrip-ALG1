@@ -1,3 +1,9 @@
+obj/
+tp2
+
+# Editor
+.vscode/
+
 # Prerequisites
 *.d
 
