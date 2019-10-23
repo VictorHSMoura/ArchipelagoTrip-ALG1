@@ -1,24 +1,23 @@
+ 
 CC := g++
-CFLAGS := -g -Wall
-
-TARGET := tp2
 SRCDIR := src
-OBJDIR := obj
+BUILDDIR := build
+TARGET := tp2
 
-SOURCES := $(shell find $(SRCDIR) -type f -name *.cpp)
-
-OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
+SRCEXT := cpp
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+CFLAGS := -g -Wall -O3
+INC := -I include/
 
 $(TARGET): $(OBJECTS)
-	@mkdir -p $(@D) # Criar diretório caso necessário
-	@$(CC) $^ -o $@
+	$(CC) $^ -o $(TARGET)
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.cpp
-	@mkdir -p $(@D) # Criar diretório caso necessário
-	@$(CC) $(CFLAGS) -c $^ -o $@
-
-.PHONY: run clean
-run: $(TARGET)
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 clean:
-	@rm -rf $(TARGET) $(OBJDIR)
+	$(RM) -r $(BUILDDIR)/* $(TARGET)
+
+.PHONY: clean
