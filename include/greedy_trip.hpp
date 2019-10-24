@@ -6,6 +6,7 @@
 class GreedyTrip {
 private:
     int total_money;
+    int n_islands;
     island *islands;
 
 public:

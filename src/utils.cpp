@@ -29,16 +29,14 @@ void merge(island islands[], int left, int middle, int right) {
         k++; 
     } 
   
-    /* Copy the remaining elements of L[], if there 
-       are any */
+    /* Copy the remaining elements of L[], if there are any */
     while (i < n1) { 
         islands[k] = L[i]; 
         i++; 
         k++; 
     } 
   
-    /* Copy the remaining elements of R[], if there 
-       are any */
+    /* Copy the remaining elements of R[], if there are any */
     while (j < n2) { 
         islands[k] = R[j]; 
         j++; 
@@ -50,8 +48,7 @@ void merge(island islands[], int left, int middle, int right) {
    sub-array of islands to be sorted */
 void mergeSort(island islands[], int left, int right) { 
     if (left < right) { 
-        // Same as (left+right)/2, but avoids overflow for 
-        // large left and h 
+        // Same as (left+right)/2, but avoids overflow for large left and h
         int middle = left+(right-left)/2; 
   
         // Sort first and second halves 
