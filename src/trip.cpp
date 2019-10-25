@@ -1,20 +1,20 @@
 #include <iostream>
-#include <iterator>
-#include "greedy_trip.hpp"
+#include <utility>
+#include "trip.hpp"
 
-GreedyTrip::GreedyTrip(int total_money, int n_islands) {
+Trip::Trip(int total_money, int n_islands) {
     this->total_money = total_money;
     this->n_islands = n_islands;
     this->islands = new island[n_islands];
 }
 
-void GreedyTrip::add_island(int island_price, int island_points, int position) {
+void Trip::add_island(int island_price, int island_points, int position) {
     this->islands[position].price = island_price;
     this->islands[position].points = island_points;
     this->islands[position].priceperpoint = (float)island_price/island_points;
 }
 
-void GreedyTrip::print_islands() {
+void Trip::print_islands() {
     for (int i = 0; i < 5; i++)
         std::cout
             << this->islands[i].price << " "
@@ -24,14 +24,7 @@ void GreedyTrip::print_islands() {
     std::cout << std::endl;
 }
 
-std::pair<int, int> GreedyTrip::run() {
-    //TODO: Greedy algorithm to solve islands problem
-    // Steps:
-    // 1. Run MergeSort to sort islands by price_per_point
-    // 2. Iterate through each island adding it to solution
-    //    if it fits on the the trip
-    // 3. Sum the price and the points of the selected islands
-    // 4. Return the total price and points 
+std::pair<int, int> Trip::runGreedy() {
     int left_money = this->total_money;
     int repetitions;
     int gained_points = 0, days_spent = 0;
@@ -48,4 +41,16 @@ std::pair<int, int> GreedyTrip::run() {
     }
     
     return std::pair<int, int>(gained_points, days_spent);
+}
+
+std::pair<int, int> Trip::runDynamic() {
+    int **OPT = new int*[this->n_islands + 1];
+    int mdc_trip = mdc(this->islands, this->total_money, this->n_islands);
+    for (int i = 0; i < this->n_islands; i++) {
+        OPT[i] = new int[this->total_money / mdc_trip];
+    }
+
+    for (int i = 0; i < this->n_islands; i++)
+        delete [] OPT[i];
+    delete [] OPT;
 }

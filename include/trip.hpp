@@ -3,17 +3,18 @@
 
 #include "utils.hpp"
 
-class GreedyTrip {
+class Trip {
 private:
     int total_money;
     int n_islands;
     island *islands;
 
 public:
-    GreedyTrip(int total_money, int n_islands);
+    Trip(int total_money, int n_islands);
     void add_island(int island_price, int island_points, int position);
     void print_islands();
-    std::pair<int, int> run();
+    std::pair<int, int> runGreedy();
+    std::pair<int, int> runDynamic();
 };
 
 #endif

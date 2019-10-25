@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "greedy_trip.hpp"
+#include "trip.hpp"
 
 #define TEST_ISLANDS 5
 
 void main_test() {
-    GreedyTrip g = GreedyTrip(6000, TEST_ISLANDS);
+    Trip g = Trip(6000, TEST_ISLANDS);
     int prices[TEST_ISLANDS] = {1000, 2000, 500, 5000, 2200};
     int points[TEST_ISLANDS] = {30, 32, 4, 90, 45};
     std::pair<int, int> result;
@@ -16,7 +16,7 @@ void main_test() {
 
     g.print_islands();
 
-    result = g.run();
+    result = g.runGreedy();
     std::cout << result.first << " " << result.second << std::endl;
 }
 
