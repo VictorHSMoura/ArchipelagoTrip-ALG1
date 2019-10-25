@@ -18,6 +18,9 @@ void main_test() {
 
     result = g.runGreedy();
     std::cout << result.first << " " << result.second << std::endl;
+
+    result = g.runDynamic();
+    std::cout << result.first << " " << result.second << std::endl;
 }
 
 int main(int argc, char const *argv[]) {

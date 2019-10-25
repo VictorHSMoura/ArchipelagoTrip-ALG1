@@ -43,14 +43,49 @@ std::pair<int, int> Trip::runGreedy() {
     return std::pair<int, int>(gained_points, days_spent);
 }
 
+
+//TODO: Refactor the code to make it more understandable
 std::pair<int, int> Trip::runDynamic() {
-    int **OPT = new int*[this->n_islands + 1];
     int mdc_trip = mdc(this->islands, this->total_money, this->n_islands);
-    for (int i = 0; i < this->n_islands; i++) {
-        OPT[i] = new int[this->total_money / mdc_trip];
+    int OPT_size = (this->total_money / mdc_trip) + 1;
+    int **OPT = new int*[(this->n_islands + 1)];
+    int gained_points = 0, days_spent = 0;
+
+    for (int i = 0; i <= this->n_islands; i++) {
+        OPT[i] = new int[OPT_size];
     }
+
+    for (int i = 0; i < OPT_size; i++)
+        OPT[0][i] = 0;
+    for (int i = 1; i <= this->n_islands; i++) {
+        for (int j = 0; j < OPT_size; j++) {
+            int w_i = this->islands[i - 1].price / mdc_trip;
+            if (w_i > j)
+                OPT[i][j] = OPT[i - 1][j];
+            else {
+                int solution1 = OPT[i - 1][j];
+                int solution2 = this->islands[i - 1].points + OPT[i - 1][j - w_i];
+
+                OPT[i][j] = solution1 > solution2 ? solution1 : solution2;
+            }
+        }
+    }
+
+    int i = this->n_islands;
+    int j = OPT_size - 1;
+    while (i != 0 && j != 0){
+        if (OPT[i - 1][j] != OPT[i][j]) {
+            days_spent++;
+            j -= this->islands[i - 1].price / mdc_trip;
+        }
+        i--;
+    }
+
+    gained_points = OPT[this->n_islands][OPT_size - 1];
 
     for (int i = 0; i < this->n_islands; i++)
         delete [] OPT[i];
     delete [] OPT;
+
+    return std::pair<int, int>(gained_points, days_spent);
 }
