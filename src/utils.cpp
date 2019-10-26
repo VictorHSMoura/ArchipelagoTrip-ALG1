@@ -11,14 +11,11 @@ int mdc_two_numbers(int num1, int num2) {
 }
 
 int mdc(island islands[], int total_value, int n_islands) {
-    int general_mdc;
+    int general_mdc = islands[0].price;
     if(n_islands > 1) {
-        general_mdc = mdc_two_numbers(islands[0].price, islands[1].price);
-        for(int i = 2; i < n_islands; i++) {
+        for(int i = 1; i < n_islands; i++) {
             general_mdc = mdc_two_numbers(general_mdc, islands[i].price);
         }
-    } else {
-        general_mdc = islands[0].price;
     }
     return mdc_two_numbers(general_mdc, total_value);
 }
