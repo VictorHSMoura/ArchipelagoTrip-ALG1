@@ -11,7 +11,11 @@ Trip::Trip(int total_money, int n_islands) {
 void Trip::add_island(int island_price, int island_points, int position) {
     this->islands[position].price = island_price;
     this->islands[position].points = island_points;
-    this->islands[position].priceperpoint = (float)island_price/island_points;
+
+    if(island_points != 0)
+        this->islands[position].priceperpoint = (float)island_price/island_points;
+    else
+        this->islands[position].priceperpoint = __INT_MAX__;
 }
 
 void Trip::print_islands() {

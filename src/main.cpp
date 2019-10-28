@@ -7,7 +7,7 @@
 int main(int argc, char const *argv[]) {
     int max_value, n_islands;
     int island_price, island_points;
-    std::pair<int, int> trip_result;
+    std::pair<int, int> trip_result_greedy, trip_result_dynamic;
     std::ifstream input_file;
     std::string line;
 
@@ -24,11 +24,11 @@ int main(int argc, char const *argv[]) {
         }
 
         if (n_islands > 0) {
-            trip_result = trip.runGreedy();
-            std::cout << trip_result.first << " " << trip_result.second << std::endl;
+            trip_result_dynamic = trip.runDynamic();
+            trip_result_greedy = trip.runGreedy();
 
-            trip_result = trip.runDynamic();
-            std::cout << trip_result.first << " " << trip_result.second << std::endl;
+            std::cout << trip_result_greedy.first << " " << trip_result_greedy.second << std::endl;
+            std::cout << trip_result_dynamic.first << " " << trip_result_dynamic.second << std::endl;
         }
         input_file.close();
     }
